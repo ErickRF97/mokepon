@@ -3,8 +3,10 @@ const capipepo = document.querySelector('#capipepo');
 const ratigueya = document.querySelector('#ratigueya');
 let spanMascotaJugador = document.querySelector('#mascota-jugador')
 let spanMascotaEnemigo = document.querySelector('#mascota-enemigo')
-let ataqueJugador
-let ataqueEnemigo
+let ataqueJugador;
+let ataqueEnemigo;
+let vidasJugador = 3;
+let vidasEnemigo = 3;
 
 function iniciarJuego(){
     let botonMascotaJugador = document.querySelector('#boton-mascota');
@@ -81,22 +83,49 @@ function ataqueAleatorioEnemigo(){
 }
 
 function combate(){
+    let spanVidasJugador = document.getElementById('vidas-jugador')
+    let spanVidasEnemigo = document.getElementById('vidas-enemigo')
+
+
     if(ataqueEnemigo == ataqueJugador){
         crearMesajeAtaque('Empate')
      } else if(ataqueJugador == 'FUEGO' && ataqueEnemigo == 'TIERRA'){
         crearMesajeAtaque("Ganaste")
+        vidasEnemigo--
+        spanVidasEnemigo.innerHTML = vidasEnemigo
+
         
      } else if(ataqueJugador == 'AGUA' && ataqueEnemigo == 'FUEGO'){
         crearMesajeAtaque("Ganaste")
+        vidasEnemigo--
+        spanVidasEnemigo.innerHTML = vidasEnemigo
 
      } else if(ataqueJugador == 'TIERRA' && ataqueEnemigo == 'AGUA'){
         crearMesajeAtaque("Ganaste")
-        
+        vidasEnemigo--
+        spanVidasEnemigo.innerHTML = vidasEnemigo
+       
      } else{
         crearMesajeAtaque('Perdiste')
-        perdidas = perdidas + 1
+        
+        vidasJugador--
+        spanVidasJugador.innerHTML = vidasJugador
+
      }
+     revisarVidas()
 }
+
+    function revisarVidas(){
+        if(vidasEnemigo == 0){
+            crearMesajeFinal('Felicitaciones GANASTE')
+        }
+        else if(vidasJugador == 0){
+            crearMesajeFinal('Perdiste 🤔')
+        }
+    
+    }
+
+
 
 function crearMesajeAtaque(resultado){
     let seccionMensajes = document.getElementById('mensajes')
@@ -108,6 +137,15 @@ function crearMesajeAtaque(resultado){
     seccionMensajes.appendChild(parrafo)
 }
 
+function crearMesajeFinal(resultadoFinal){
+    let seccionMensajes = document.getElementById('mensajes')
+
+    let parrafo = document.createElement('p')
+
+    parrafo.innerHTML = resultadoFinal
+
+    seccionMensajes.appendChild(parrafo)
+}
 
 
 function aleatorio(min,max){
