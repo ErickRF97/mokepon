@@ -9,22 +9,33 @@ let vidasJugador = 3;
 let vidasEnemigo = 3;
 
 function iniciarJuego(){
+    let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
+    sectionSeleccionarAtaque.style.display = 'none'
+
+    let sectionReinicar = document.getElementById('reiniciar')
+    sectionReinicar.style.display = 'none'
+
     let botonMascotaJugador = document.querySelector('#boton-mascota');
     botonMascotaJugador.addEventListener('click', seleccionarMascotaJugador)
 
     let botonAgua = document.querySelector('#boton-agua')
         botonAgua.addEventListener('click', ataqueAgua)
-
     let botonTierra = document.querySelector('#boton-tierra')
         botonTierra.addEventListener('click', ataqueTierra)
-    
-        let botonFuego = document.querySelector('#boton-fuego')
+    let botonFuego = document.querySelector('#boton-fuego')
         botonFuego.addEventListener('click', ataqueFuego)
 
+    let botonReiniciar = document.getElementById('boton-reiniciar')
+        botonReiniciar.addEventListener('click', reiniciarJuego)
 }
 
 function seleccionarMascotaJugador(){
-    
+    let sectionSeleccionarMascota= document.getElementById('seleccionar-mascota')
+    sectionSeleccionarMascota.style.display = 'none'
+
+    let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
+    sectionSeleccionarAtaque.style.display = 'block'
+
     if(hipodoge.checked == true){
         spanMascotaJugador.innerHTML = "Hipodoge"
     }
@@ -115,7 +126,7 @@ function combate(){
      revisarVidas()
 }
 
-    function revisarVidas(){
+function revisarVidas(){
         if(vidasEnemigo == 0){
             crearMesajeFinal('Felicitaciones GANASTE')
         }
@@ -124,8 +135,6 @@ function combate(){
         }
     
     }
-
-
 
 function crearMesajeAtaque(resultado){
     let seccionMensajes = document.getElementById('mensajes')
@@ -138,6 +147,9 @@ function crearMesajeAtaque(resultado){
 }
 
 function crearMesajeFinal(resultadoFinal){
+    let sectionReinicar = document.getElementById('reiniciar')
+    sectionReinicar.style.display = 'block'
+
     let seccionMensajes = document.getElementById('mensajes')
 
     let parrafo = document.createElement('p')
@@ -145,8 +157,20 @@ function crearMesajeFinal(resultadoFinal){
     parrafo.innerHTML = resultadoFinal
 
     seccionMensajes.appendChild(parrafo)
+
+    let botonAgua = document.querySelector('#boton-agua')
+    botonAgua.disabled = true
+
+    let botonTierra = document.querySelector('#boton-tierra')
+    botonTierra.disabled = true
+
+    let botonFuego = document.querySelector('#boton-fuego')
+    botonFuego.disabled = true
 }
 
+function reiniciarJuego(){
+    location.reload()
+}
 
 function aleatorio(min,max){
     return Math.floor(Math.random()*(max-min+1)+min)
